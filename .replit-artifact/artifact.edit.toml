@@ -1,0 +1,17 @@
+kind = "web"
+previewPath = "/nextjs/"
+title = "Rosewood Next.js"
+version = "1.0.0"
+id = "artifacts/rosewood-next"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/nextjs" ]
+localPort = 3000
+
+[services.development]
+run = "pnpm --filter @workspace/rosewood-next run dev"
+
+[services.env]
+PORT = "3000"
