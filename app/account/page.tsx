@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import { formatPrice, formatDate, statusColors } from "@/lib/utils";
-import type { OrderWithItems, PerfumeWithDetails } from "@/lib/types";
+import type { OrderWithItems, PerfumeWithDetails, Profile } from "@/lib/types";
 import { Package, Heart } from "lucide-react";
 
 export default function AccountPage() {
@@ -23,7 +23,7 @@ export default function AccountPage() {
       if (!user) { router.push("/login"); return; }
 
       const { data: profile } = await supabase.from("profiles").select("full_name").eq("id", user.id).single();
-      setUserName(profile?.full_name ?? user.email ?? "");
+      setUserName(((profile as unknown) as Profile)?.full_name ?? user.email ?? "");
 
       const { data: ordersData } = await supabase
         .from("orders")
