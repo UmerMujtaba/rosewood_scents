@@ -6,7 +6,10 @@ export async function POST(request: Request) {
   const sb = supabase as any;
   try {
     const body = await request.json();
-    const payload = body.payload;
+    const payload = body?.payload ?? body;
+    if (!payload || typeof payload !== "object") {
+      return NextResponse.json({ error: "Empty or invalid json" }, { status: 400 });
+    }
 
     // Try insert with image_urls first (if column exists in remote schema)
     const { data, error } = await sb.from("perfumes").insert(payload).select().single();
@@ -60,9 +63,17 @@ export async function PUT(request: Request) {
   const sb = supabase as any;
   try {
     const body = await request.json();
-    const id = body.id;
-    const payload = body.payload;
+    const id = body?.id ?? body?.payload?.id;
+    const payload = body?.payload ?? (() => {
+      if (!body || typeof body !== "object") return null;
+      const { id: _id, ...rest } = body;
+      return rest;
+    })();
+
     if (!id) return NextResponse.json({ error: "Missing product id" }, { status: 400 });
+    if (!payload || typeof payload !== "object") {
+      return NextResponse.json({ error: "Empty or invalid json" }, { status: 400 });
+    }
 
     const { data, error } = await sb.from("perfumes").update(payload).eq("id", id).select().single();
     if (error) {

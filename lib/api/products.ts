@@ -30,7 +30,7 @@ export async function updateProduct(id: number, payload: Partial<ProductPayload>
   const res = await fetch(`/api/admin/products`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id, ...payload }),
+    body: JSON.stringify({ id, payload }),
   });
   if (!res.ok) throw new Error(`Update product failed: ${res.status}`);
   return res.json();
