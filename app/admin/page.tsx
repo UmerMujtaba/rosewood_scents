@@ -270,7 +270,7 @@ export default function AdminPage() {
                 <BarChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0e8e0" />
                   <XAxis dataKey="month" tick={{ fontSize: 12 }} />
-                  <YAxis tick={{ fontSize: 12 }} tickFormatter={v => `$${v}`} />
+                  <YAxis tick={{ fontSize: 12 }} tickFormatter={v => `Rs ${v}`} />
                   <Tooltip formatter={(v: number) => [formatPrice(v), "Revenue"]} />
                   <Bar dataKey="revenue" fill="#8b3020" radius={[4, 4, 0, 0]} />
                 </BarChart>

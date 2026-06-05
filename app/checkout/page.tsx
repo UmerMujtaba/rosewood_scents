@@ -82,20 +82,20 @@ export default function CheckoutPage() {
             </div>
           ))}
           <div>
-            <label className="block text-sm font-medium text-bark/70 mb-1">Country</label>
+            {/* <label className="block text-sm font-medium text-bark/70 mb-1">Country</label>
             <select
               value={form.country}
               onChange={(e) => setForm({ ...form, country: e.target.value })}
               className="input"
             >
-              <option value="US">United States</option>
+              <option value="US">Pakistan</option>
               <option value="GB">United Kingdom</option>
               <option value="CA">Canada</option>
               <option value="AU">Australia</option>
               <option value="IN">India</option>
               <option value="DE">Germany</option>
               <option value="FR">France</option>
-            </select>
+            </select> */}
           </div>
           <button type="submit" disabled={loading} className="btn-primary w-full">
             {loading ? "Processing..." : "Place Order"}

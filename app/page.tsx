@@ -109,7 +109,7 @@ export default async function HomePage() {
           </div>
           <div className="relative aspect-square rounded-2xl overflow-hidden bg-rosewood-100">
             <Image
-              src="https://images.unsplash.com/photo-1541643600914-78b084683702?w=800"
+              src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=800"
               alt="Perfume crafting"
               fill
               className="object-cover"
