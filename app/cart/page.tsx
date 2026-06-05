@@ -30,8 +30,8 @@ export default function CartPage() {
           {items.map((item) => (
             <div key={item.perfume_id} className="card flex gap-4 p-4">
               <div className="relative w-20 h-24 rounded-xl overflow-hidden bg-rosewood-50 shrink-0">
-                {item.perfume.image_url ? (
-                  <Image src={item.perfume.image_url} alt={item.perfume.name} fill className="object-cover" />
+                {(item.perfume.image_urls?.[0] || item.perfume.image_url) ? (
+                  <Image src={item.perfume.image_urls?.[0] || item.perfume.image_url!} alt={item.perfume.name} fill className="object-cover" />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center text-2xl">🌹</div>
                 )}

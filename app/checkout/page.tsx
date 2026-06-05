@@ -106,20 +106,23 @@ export default function CheckoutPage() {
         <div>
           <h2 className="font-serif text-xl font-semibold text-bark mb-6">Order Summary</h2>
           <div className="space-y-3 mb-6">
-            {items.map((item) => (
-              <div key={item.perfume_id} className="flex items-center gap-3">
-                <div className="relative w-12 h-14 rounded-lg overflow-hidden bg-rosewood-50 shrink-0">
-                  {item.perfume.image_url ? (
-                    <Image src={item.perfume.image_url} alt={item.perfume.name} fill className="object-cover" />
-                  ) : <div className="absolute inset-0 flex items-center justify-center">🌹</div>}
+            {items.map((item) => {
+              const productImage = item.perfume.image_urls?.[0] || item.perfume.image_url;
+              return (
+                <div key={item.perfume_id} className="flex items-center gap-3">
+                  <div className="relative w-12 h-14 rounded-lg overflow-hidden bg-rosewood-50 shrink-0">
+                    {productImage ? (
+                      <Image src={productImage} alt={item.perfume.name} fill className="object-cover" />
+                    ) : <div className="absolute inset-0 flex items-center justify-center">🌹</div>}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-bark truncate">{item.perfume.name}</p>
+                    <p className="text-xs text-bark/50">Qty {item.quantity}</p>
+                  </div>
+                  <p className="text-sm font-semibold text-bark">{formatPrice(item.perfume.price * item.quantity)}</p>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-bark truncate">{item.perfume.name}</p>
-                  <p className="text-xs text-bark/50">Qty {item.quantity}</p>
-                </div>
-                <p className="text-sm font-semibold text-bark">{formatPrice(item.perfume.price * item.quantity)}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
           <div className="border-t border-rosewood-100 pt-4">
             <div className="flex justify-between font-bold text-bark">

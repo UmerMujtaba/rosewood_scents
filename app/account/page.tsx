@@ -97,16 +97,19 @@ export default function AccountPage() {
                 </div>
               </div>
               <div className="flex gap-2 flex-wrap">
-                {order.order_items?.map((item) => (
-                  <div key={item.id} className="flex items-center gap-2 bg-rosewood-50 rounded-lg px-2 py-1">
-                    {item.perfume?.image_url && (
-                      <div className="relative w-8 h-8 rounded overflow-hidden">
-                        <Image src={item.perfume.image_url} alt={item.perfume.name} fill className="object-cover" />
-                      </div>
-                    )}
-                    <span className="text-xs text-bark/70">{item.perfume?.name} × {item.quantity}</span>
-                  </div>
-                ))}
+                {order.order_items?.map((item) => {
+                  const orderImage = item.perfume?.image_urls?.[0] || item.perfume?.image_url;
+                  return (
+                    <div key={item.id} className="flex items-center gap-2 bg-rosewood-50 rounded-lg px-2 py-1">
+                      {orderImage && item.perfume && (
+                        <div className="relative w-8 h-8 rounded overflow-hidden">
+                          <Image src={orderImage} alt={item.perfume.name} fill className="object-cover" />
+                        </div>
+                      )}
+                      <span className="text-xs text-bark/70">{item.perfume?.name} × {item.quantity}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ))}
@@ -123,17 +126,20 @@ export default function AccountPage() {
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
-              {favorites.map((p) => (
-                <Link key={p.id} href={`/shop/${p.slug}`} className="group block">
-                  <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-rosewood-50">
-                    {p.image_url ? (
-                      <Image src={p.image_url} alt={p.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-                    ) : <div className="absolute inset-0 flex items-center justify-center text-3xl">🌹</div>}
-                  </div>
-                  <p className="font-serif font-semibold text-bark mt-2 text-sm">{p.name}</p>
-                  <p className="text-rosewood-700 text-sm">{formatPrice(p.price)}</p>
-                </Link>
-              ))}
+              {favorites.map((p) => {
+                const favoriteImage = p.image_urls?.[0] || p.image_url;
+                return (
+                  <Link key={p.id} href={`/shop/${p.slug}`} className="group block">
+                    <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-rosewood-50">
+                      {favoriteImage ? (
+                        <Image src={favoriteImage} alt={p.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                      ) : <div className="absolute inset-0 flex items-center justify-center text-3xl">🌹</div>}
+                    </div>
+                    <p className="font-serif font-semibold text-bark mt-2 text-sm">{p.name}</p>
+                    <p className="text-rosewood-700 text-sm">{formatPrice(p.price)}</p>
+                  </Link>
+                );
+              })}
             </div>
           )}
         </div>

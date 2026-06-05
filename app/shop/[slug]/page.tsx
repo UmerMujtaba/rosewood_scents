@@ -95,6 +95,8 @@ export default function ProductPage() {
   const midNotes = perfume.scent_notes.filter((n) => n.note_type === "middle");
   const baseNotes = perfume.scent_notes.filter((n) => n.note_type === "base");
 
+  const primaryImage = perfume.image_urls?.[0] || perfume.image_url;
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
       <Link href="/shop" className="inline-flex items-center gap-1 text-sm text-bark/50 hover:text-bark mb-8 transition-colors">
@@ -103,11 +105,22 @@ export default function ProductPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
         {/* Image */}
-        <div className="relative aspect-square rounded-2xl overflow-hidden bg-rosewood-50">
-          {perfume.image_url ? (
-            <Image src={perfume.image_url} alt={perfume.name} fill className="object-cover" />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center text-8xl">🌹</div>
+        <div className="space-y-4">
+          <div className="relative aspect-square rounded-2xl overflow-hidden bg-rosewood-50">
+            {primaryImage ? (
+              <Image src={primaryImage} alt={perfume.name} fill className="object-cover" />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center text-8xl">🌹</div>
+            )}
+          </div>
+          {perfume.image_urls && perfume.image_urls.length > 1 && (
+            <div className="grid grid-cols-3 gap-3">
+              {perfume.image_urls.slice(1).map((url, index) => (
+                <div key={url} className="relative aspect-square overflow-hidden rounded-xl bg-rosewood-50">
+                  <Image src={url} alt={`${perfume.name} image ${index + 2}`} fill className="object-cover" />
+                </div>
+              ))}
+            </div>
           )}
         </div>
 

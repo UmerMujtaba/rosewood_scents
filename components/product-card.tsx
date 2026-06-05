@@ -27,9 +27,9 @@ export function ProductCard({ perfume, isFavorited, onToggleFavorite }: ProductC
   return (
     <Link href={`/shop/${perfume.slug}`} className="group block">
       <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-rosewood-50">
-        {perfume.image_url ? (
+        {((perfume.image_urls && perfume.image_urls[0]) || perfume.image_url) ? (
           <Image
-            src={perfume.image_url}
+            src={perfume.image_urls?.[0] || perfume.image_url!}
             alt={perfume.name}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"

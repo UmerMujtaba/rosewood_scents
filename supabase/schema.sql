@@ -47,6 +47,7 @@ create table if not exists perfumes (
   description text,
   price numeric(10,2) not null,
   image_url text,
+  image_urls text[] default '{}',
   stock_quantity int not null default 0,
   is_featured boolean not null default false,
   created_at timestamptz default now()

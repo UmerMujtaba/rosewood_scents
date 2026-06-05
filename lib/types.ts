@@ -16,16 +16,16 @@ export interface Database {
       perfumes: {
         Row: {
           id: number; name: string; slug: string; description: string | null;
-          price: number; image_url: string | null; stock_quantity: number;
+          price: number; image_url: string | null; image_urls: string[]; stock_quantity: number;
           is_featured: boolean; created_at: string;
         };
         Insert: {
           name: string; slug: string; description?: string | null;
-          price: number; image_url?: string | null; stock_quantity?: number; is_featured?: boolean;
+          price: number; image_url?: string | null; image_urls?: string[]; stock_quantity?: number; is_featured?: boolean;
         };
         Update: {
           name?: string; slug?: string; description?: string | null;
-          price?: number; image_url?: string | null; stock_quantity?: number; is_featured?: boolean;
+          price?: number; image_url?: string | null; image_urls?: string[]; stock_quantity?: number; is_featured?: boolean;
         };
       };
       scent_notes: {

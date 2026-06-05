@@ -7,8 +7,8 @@ export const revalidate = 60;
 async function getData() {
   try {
     const supabase = await createClient();
-    const [perfumesRes, categoriesRes] = await Promise.all([
-      supabase.from("perfumes").select("*").order("name"),
+      const [perfumesRes, categoriesRes] = await Promise.all([
+      supabase.from("perfumes").select("id,name,slug,description,price,image_url,stock_quantity,is_featured,created_at").order("name"),
       supabase.from("categories").select("*").order("name"),
     ]);
     return {
