@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     }
 
     // Try insert with image_urls first (if column exists in remote schema)
-    const { data, error } = await sb.from("perfumes").insert(payload).select().single();
+    const { data, error } = await sb.from("perfumes").upsert(payload).select().single();
     if (error) {
       const msg = error.message ?? "Unknown error";
       const missingColumn = /image_urls|column .* does not exist/i.test(msg);

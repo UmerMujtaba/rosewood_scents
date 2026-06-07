@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase/server";
 
-const BUCKET_NAME = process.env.SUPABASE_IMAGE_BUCKET ?? "perfume-images";
+const BUCKET_NAME = process.env.SUPABASE_IMAGE_BUCKET ?? "perfumes";
 
 export async function POST(request: Request) {
   const supabase = await createServiceClient();
@@ -23,13 +23,16 @@ export async function POST(request: Request) {
       public: true,
     });
     if (createError) {
-      return NextResponse.json({ error: createError.message }, { status: 500 });
+      const alreadyExists = /resource already exists/i.test(createError.message);
+      if (!alreadyExists) {
+        return NextResponse.json({ error: createError.message }, { status: 500 });
+      }
     }
   }
 
   const urls: string[] = [];
   for (const file of files) {
-    const fileName = `${Date.now()}-${file.name.replace(/\s+/g, "_")}`;
+    const fileName = `${Date.now()}-${crypto.randomUUID()}-${file.name.replace(/\s+/g, "_")}`;
     const { error: uploadError } = await supabase.storage
       .from(BUCKET_NAME)
       .upload(fileName, file, { cacheControl: "3600", upsert: false });
